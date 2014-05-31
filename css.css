@@ -1,0 +1,56 @@
+body
+{
+	padding: 10px;
+	margin: 0px;
+	background: #666666;
+}
+
+table
+{
+	margin: 0px;
+	background: #666666;
+	top: 0px;
+	left: 0px;
+	empty-cells: collapse;
+	white-space: nowrap;
+	/*width: 400px;*/
+}
+
+table tr td
+{
+	border: 3px #dddddd outset;
+	background: #dddddd;
+	text-align: center;
+	height: 30px;
+	font-family: "Lucida Sans", "Century Gothic";
+	font-weight: bold;
+}
+
+span.Aude:after, span.Aude:before{content: url(iaps.gif); margin: 3px;}
+span.Gemi:after, span.Gemi:before{content: url(igms.gif); margin: 3px;}
+span.Guil:after, span.Guil:before{content: url(igus.gif); margin: 3px;}
+span.Jeez:after, span.Jeez:before{content: url(ijzs.gif); margin: 3px;}
+span.Kash:after, span.Kash:before{content: url(isks.gif); margin: 3px;}
+
+span.AudeM:after, span.AudeM:before{content: url(iapm.gif); margin: 3px;}
+span.GemiM:after, span.GemiM:before{content: url(igmm.gif); margin: 3px;}
+span.GuilM:after, span.GuilM:before{content: url(igum.gif); margin: 3px;}
+span.JeezM:after, span.JeezM:before{content: url(ijzm.gif); margin: 3px;}
+span.KashM:after, span.KashM:before{content: url(iskm.gif); margin: 3px;}
+
+table tr td.novis
+{
+	visibility: hidden;
+}
+
+table.Aude tr td{background: #8888ee; border-color: #8888ee;}
+table.Gemi tr td{background: #77bb77; border-color: #77bb77;}
+table.Guil tr td{background: #aa9988; border-color: #aa9988;}
+table.Jeez tr td{background: #9955bb; border-color: #9955bb;}
+table.Kash tr td{background: #bb9977; border-color: #bb9977;}
+table.Rank tr td{background: #99aa99; border-color: #99aa99;}
+table.Rank tr.Gold td{background: #eedd99; border-color: #eedd99; font-size: 1.5em;}
+table.Rank tr.Silv td{background: #aaaabb; border-color: #aaaabb; font-size: 1.25em;}
+table.Rank tr.Iron td{background: #dd8877; border-color: #dd8877; font-size: 1.2em;}
+table.Rank tr.None td{}
+
