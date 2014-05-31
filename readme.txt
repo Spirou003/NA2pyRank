@@ -6,7 +6,7 @@ Exécutez le fichier script.py, une console s'ouvre.
 Le script vous demande ce que vous voulez faire. Voici la liste des commandes possibles:
 - help : afficher l'aide, qui contient l'ensemble des commandes existantes
 - quit : quitter le script
-- create : créer un nouveau fichier de scores
+- create : créer un nouveau fichier de scores (nom inderdit: quit.txt)
 - load : charger un fichier de scores existant
 - save : enregistrer les modifications apportées
 - close : fermer le fichier courant
