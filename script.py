@@ -160,7 +160,7 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
     k = 0
     for e in sbdict:
         FFFFF.write('\t\t<td><table class="'+sdict[i]+'">\n')
-        FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="' + e + '.png"></td></tr>\n')
+        FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="img/' + e + '.png"></td></tr>\n')
         FFFFF.write('\t\t\t<tr><td>Lieu</td><td>Score</td></tr>\n')
         j = 0
         while (j < mdict[i]):
@@ -173,13 +173,13 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
         while (j < max):
             j += 1
             FFFFF.write('\t\t\t<tr><td></td><td></td></tr>\n')
-        FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="' + e + '.png"></td></tr>\n')
+        FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="img/' + e + '.png"></td></tr>\n')
         FFFFF.write('\t\t</table></td>\n')
         i += 1
     FFFFF.write('\t\t</tr></table>\n')
     FFFFF.write('\t\t<table><tr><td><table class="Rank">\n')
-    FFFFF.write('\t\t\t<tr><td><img alt="Numero" src="p0.png"></td><td>Scores</td><td>Lieux</td></tr>\n')
-    FFFFF.write('\t\t\t<tr class="Gold"><td><img alt="1" src="p1.png"></td><td><span class="')
+    FFFFF.write('\t\t\t<tr><td><img alt="Numero" src="img/p0.png"></td><td>Scores</td><td>Lieux</td></tr>\n')
+    FFFFF.write('\t\t\t<tr class="Gold"><td><img alt="1" src="img/p1.png"></td><td><span class="')
     FFFFF.write(sdict[int(mscores[0][2])])
     FFFFF.write('M">')
     FFFFF.write(nsep(mscores[0][1]))
@@ -188,7 +188,7 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
     FFFFF.write('M">')
     FFFFF.write(dict[int(mscores[0][0])][0])
     FFFFF.write('</span></td></tr>\n')
-    FFFFF.write('\t\t\t<tr class="Silv"><td><img alt="2" src="p2.png"></td><td><span class="')
+    FFFFF.write('\t\t\t<tr class="Silv"><td><img alt="2" src="img/p2.png"></td><td><span class="')
     FFFFF.write(sdict[int(mscores[1][2])])
     FFFFF.write('M">')
     FFFFF.write(nsep(mscores[1][1]))
@@ -197,7 +197,7 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
     FFFFF.write('M">')
     FFFFF.write(dict[int(mscores[1][0])][0])
     FFFFF.write('</span></td></tr>\n')
-    FFFFF.write('\t\t\t<tr class="Iron"><td><img alt="3" src="p3.png"></td><td><span class="')
+    FFFFF.write('\t\t\t<tr class="Iron"><td><img alt="3" src="img/p3.png"></td><td><span class="')
     FFFFF.write(sdict[int(mscores[2][2])])
     FFFFF.write('M">')
     FFFFF.write(nsep(mscores[2][1]))
@@ -208,7 +208,7 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
     FFFFF.write('</span></td></tr>\n')
     i = 3
     while (i < 10):
-        FFFFF.write('\t\t\t<tr><td><img alt="' + str(i+1) + '" src="p' + str(m8(i+1)) + '.png"></td><td><span class="' +\
+        FFFFF.write('\t\t\t<tr><td><img alt="' + str(i+1) + '" src="img/p' + str(m8(i+1)) + '.png"></td><td><span class="' +\
         sdict[int(mscores[i][2])] + '">' + nsep(mscores[i][1]) + '</span></td><td><span class="' +\
         sdict[int(dict[int(mscores[i][0])][1])] + '">')
         FFFFF.write(dict[int(mscores[i][0])][0])
@@ -243,7 +243,7 @@ while (Str != "quit"):
 		print "-\"insert\": insérer un score dans le fichier courant"
 		print "-\"insert-help\": obtenir l'aide du mode \"insert\""
 		print "-\"create\": créer un fichier vierge"
-		print "-\"unlock\": libérer le fichier courant"
+		print "-\"close\": fermer le fichier courant"
 		print "-\"genere\": générer le fichier HTML"
 		print "NB: tous les noms de fichier sont autorisés, sauf \"quit.txt\""
 	elif (Str == "insert-help"):
@@ -343,7 +343,7 @@ while (Str != "quit"):
 				genere(htmlfile, sdict, sbdict, dict, mdict, scores, mscores, max)
 				print "Fichier HTML écrit"
 				htmlfile.close()
-	elif (Str == "unlock" or Str == "quit"):
+	elif (Str == "close" or Str == "quit"):
 		if (file != None):
 			file.close()
 			file = None

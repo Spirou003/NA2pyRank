@@ -26,17 +26,17 @@ table tr td
 	font-weight: bold;
 }
 
-span.Aude:after, span.Aude:before{content: url(iaps.gif); margin: 3px;}
-span.Gemi:after, span.Gemi:before{content: url(igms.gif); margin: 3px;}
-span.Guil:after, span.Guil:before{content: url(igus.gif); margin: 3px;}
-span.Jeez:after, span.Jeez:before{content: url(ijzs.gif); margin: 3px;}
-span.Kash:after, span.Kash:before{content: url(isks.gif); margin: 3px;}
+span.Aude:after, span.Aude:before{content: url(img/iaps.gif); margin: 3px;}
+span.Gemi:after, span.Gemi:before{content: url(img/igms.gif); margin: 3px;}
+span.Guil:after, span.Guil:before{content: url(img/igus.gif); margin: 3px;}
+span.Jeez:after, span.Jeez:before{content: url(img/ijzs.gif); margin: 3px;}
+span.Kash:after, span.Kash:before{content: url(img/isks.gif); margin: 3px;}
 
-span.AudeM:after, span.AudeM:before{content: url(iapm.gif); margin: 3px;}
-span.GemiM:after, span.GemiM:before{content: url(igmm.gif); margin: 3px;}
-span.GuilM:after, span.GuilM:before{content: url(igum.gif); margin: 3px;}
-span.JeezM:after, span.JeezM:before{content: url(ijzm.gif); margin: 3px;}
-span.KashM:after, span.KashM:before{content: url(iskm.gif); margin: 3px;}
+span.AudeM:after, span.AudeM:before{content: url(img/iapm.gif); margin: 3px;}
+span.GemiM:after, span.GemiM:before{content: url(img/igmm.gif); margin: 3px;}
+span.GuilM:after, span.GuilM:before{content: url(img/igum.gif); margin: 3px;}
+span.JeezM:after, span.JeezM:before{content: url(img/ijzm.gif); margin: 3px;}
+span.KashM:after, span.KashM:before{content: url(img/iskm.gif); margin: 3px;}
 
 table tr td.novis
 {
