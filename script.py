@@ -86,25 +86,33 @@ def create(SSSSS, DDDDD):
 		File.flush()
 		return (File, AAAAA, BBBBB)
 
-def file_load():
-	SSS = raw_input_low("Entrez le nom du fichier (sans le .txt): ")
-	if (SSS != "quit"):
-		try:
-			FFF = open(SSS + ".txt", "r+")
-		except BaseException, e:
-			print e
-			return None
-		else:
-			(Scores, mScores) = load_scores(FFF, ndict)
-			i = 0
-			for el in Scores:
-				print dict[i][0], ": "+nsep(el[0])
-				i += 1
-			print ""
-			for el in mScores:
-				print dict[el[0]][0], ": "+nsep(el[1])
-			print ""
-			return (FFF, Scores, mScores, SSS)
+def file_load(params):
+    SSS = ""
+    if (len(params) == 0):
+        SSS = raw_input_low("Entrez le nom du fichier (sans le .txt): ")
+    else:
+        SSS = params[0]
+    if (SSS != "quit"):
+        try:
+            FFF = open(SSS + ".txt", "r+")
+        except BaseException, e:
+            print e
+            return None
+        else:
+            (Scores, mScores) = load_scores(FFF, ndict)
+            i = 0
+            maxSize = 0
+            for name in dict:
+                if (maxSize < len(name[0])):
+                    maxSize = len(name[0])
+            for el in Scores:
+                print str(i)+":\t",dict[i][0], ((maxSize-len(dict[i][0]))*" ")+": "+nsep(el[0])
+                i += 1
+            print ""
+            for el in mScores:
+                print dict[el[0]][0], ": "+nsep(el[1])
+            print ""
+            return (FFF, Scores, mScores, SSS)
 
 """
 maxdict compte le nombre de lieux pour chaque ecole et en retourne une liste
@@ -159,6 +167,7 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
     i = 0
     k = 0
     for e in sbdict:
+        moyenne = 0.
         FFFFF.write('\t\t<td><table class="'+sdict[i]+'">\n')
         FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="img/' + e + '.png"></td></tr>\n')
         FFFFF.write('\t\t\t<tr><td>Lieu</td><td>Score</td></tr>\n')
@@ -168,12 +177,14 @@ def genere(FFFFF, sdict, sbdict, dict, mdict, scores, mscores, max):
             FFFFF.write('\t\t\t<tr><td>')
             FFFFF.write(str(trilist[k][2]))
             FFFFF.write('</td><td><span class="' + str(sdict[trilist[k][1]]) + '">' + nsep(trilist[k][0]) + '</span></td></tr>\n')
+            moyenne += trilist[k][0]
             j += 1
             k += 1
         while (j < max):
             j += 1
-            FFFFF.write('\t\t\t<tr><td></td><td></td></tr>\n')
+            FFFFF.write('\t\t\t<tr><td class="empty"></td><td class="empty"></td></tr>\n')
         FFFFF.write('\t\t\t<tr><td colspan="2"><img alt="1" src="img/' + e + '.png"></td></tr>\n')
+        FFFFF.write('\t\t\t<tr><td>Moyenne</td><td>' + nsep(int(moyenne)/mdict[i]) + '</td></tr>\n')
         FFFFF.write('\t\t</table></td>\n')
         i += 1
     FFFFF.write('\t\t</tr></table>\n')
@@ -231,120 +242,134 @@ mscores = None
 sdict = ("Guil", "Aude", "Gemi", "Kash", "Jeez")
 sbdict = ("igub", "iapb", "igmb", "iskb", "ijzb")
 Str = "1"
+params = ""
 file = None
 var = None
 #print sys.stdout.encoding
 while (Str != "quit"):
-	Str = raw_input_low("Que voulez-vous faire? (help pour aide) ")
-	if (Str == "help"):
-		print "-\"quit\": quitter le programme, ou le menu courant"
-		print "-\"load\": charger un fichier"
-		print "-\"save\": sauver le fichier courant"
-		print "-\"insert\": insérer un score dans le fichier courant"
-		print "-\"insert-help\": obtenir l'aide du mode \"insert\""
-		print "-\"create\": créer un fichier vierge"
-		print "-\"close\": fermer le fichier courant"
-		print "-\"genere\": générer le fichier HTML"
-		print "NB: tous les noms de fichier sont autorisés, sauf \"quit.txt\""
-	elif (Str == "insert-help"):
-		print "Les écoles et lieux sont représentés par un numéro suivant la liste:"
-		i = 0
-		print "Écoles:"
-		for ecole in sdict:
-			print str(i) + " :\t" + ecole
-			i += 1
-		print "\nLieux:"
-		i = 0
-		for lieu in dict:
-			print str(i) + " :\t" + lieu[0].decode("utf8")
-			i += 1
-	elif (Str == "load"):
-		if (file != None):
-			if (raw_input_low("Voulez-vous fermer le fichier actuel? (Y/N) ") == "y"):
-				file.close()
-				var = file_load()
-				if (var != None):
-					(file, scores, mscores, namefile) = var
-		else:
-			var = file_load()
-			if (var != None):
-				(file, scores, mscores, namefile) = var
-	elif (Str == "save"):
-		if (file != None):
-			save_scores(file, scores, mscores)
-			print "Sauvegarde OK"
-		else:
-			print "Échec de la sauvegarde: aucun score chargé"
-	elif (Str == "insert"):
-		if (file == None):
-			print "Erreur: aucun fichier chargé"
-		else:
-			Str = raw_input_low("Entrez le score a inserer (lieu score ecole): ")
-			if (Str == "quit"):
-				Str = "1"
-			else:
-				Str = Str.split(' ')
-				try:
-					Str[0] = int(Str[0])
-					Str[1] = int(Str[1])
-					Str[2] = int(Str[2])
-					if (Str[2] not in {0, 1, 2, 3, 4} or Str[0] < 0 or Str[0] >= ndict):
-						raise BaseException("list index out of range")
-				except BaseException, EEEEE:
-					print EEEEE
-				else:
-					if (scores[Str[0]][0] < Str[1]):
-						print "Ancien record: "+nsep(scores[Str[0]][0])+" ; nouveau record: "+nsep(Str[1])
-						scores[Str[0]][0] = Str[1]
-						scores[Str[0]][1] = Str[2]
-					else:
-						print "Meilleur score: "+nsep(scores[Str[0]][0])+" ; votre score: "+nsep(Str[1])
-					i = 9
-					while (i >= 0 and mscores[i][1] < Str[1]):
-						i -= 1
-					i += 1
-					#if (dict[Str[0]][2] == '1'): pour eviter les mines dans le classement
-					if (dict[Str[0]][2] == '1'):
-						mscores.insert(i, [Str[0], Str[1], Str[2]])
-						if (i == 10):
-							pass
-						else:
-							def mlsk_1d56f(n):
-								if (n == 0):
-									return "-er"
-								else:
-									return "-eme"
-							print "C'est le "+str(i+1) + mlsk_1d56f(i) + " meilleur score!"
-							print "Score battu: "+nsep(mscores[i+1][1])
-						popped = mscores.pop()
-					print ""
-	elif (Str == "create"):
-		if (file != None):
-			if (raw_input_low("Voulez-vous fermer le fichier actuel? (Y/N) ") == "y"):
-				file.close()
-				file = None
-			Str = "1"
-		if (file == None):
-			Str = raw_input_low("Entrez le nom du fichier (sans le .txt): ")
-			if (Str != "quit"):
-				(file, scores, mscores) = create(Str + ".txt", dict)
-				namefile = Str
-			else:
-				Str = "1"
-	elif (Str == "genere"):
-		if (file == None):
-			print "Erreur: aucun fichier chargé"
-		else:
-			try:
-				htmlfile = open(namefile + '.html', "w+")
-			except BaseException, E:
-				print E
-			else:
-				genere(htmlfile, sdict, sbdict, dict, mdict, scores, mscores, max)
-				print "Fichier HTML écrit"
-				htmlfile.close()
-	elif (Str == "close" or Str == "quit"):
-		if (file != None):
-			file.close()
-			file = None
+    Str = raw_input_low("Que voulez-vous faire? (help pour aide) ")
+    params = Str.split()
+    if (len(params) == 0):
+        Str = ""
+    else:
+        Str = params[0]
+    params = params[1:]
+    if (Str == "help"):
+        print "-\"quit\": quitter le programme, ou le menu courant"
+        print "-\"load\": charger un fichier"
+        print "-\"save\": sauver le fichier courant"
+        print "-\"insert\": insérer un score dans le fichier courant"
+        print "-\"insert-help\": obtenir l'aide du mode \"insert\""
+        print "-\"create\": créer un fichier vierge"
+        print "-\"close\": fermer le fichier courant"
+        print "-\"genere\": générer le fichier HTML"
+        print "NB: tous les noms de fichier sont autorisés, sauf \"quit.txt\""
+    elif (Str == "insert-help"):
+        print "Les écoles et lieux sont représentés par un numéro suivant la liste:"
+        i = 0
+        print "Écoles:"
+        for ecole in sdict:
+            print str(i) + " :\t" + ecole
+            i += 1
+        print "\nLieux:"
+        i = 0
+        for lieu in dict:
+            print str(i) + " :\t" + lieu[0].decode("utf8")
+            i += 1
+    elif (Str == "load"):
+        if (file != None):
+            if (raw_input_low("Voulez-vous fermer le fichier actuel? (Y/N) ") == "y"):
+                file.close()
+                var = file_load(params)
+                if (var != None):
+                    (file, scores, mscores, namefile) = var
+        else:
+            var = file_load(params)
+            if (var != None):
+                (file, scores, mscores, namefile) = var
+    elif (Str == "save"):
+        if (file != None):
+            save_scores(file, scores, mscores)
+            print "Sauvegarde OK"
+        else:
+            print "Échec de la sauvegarde: aucun score chargé"
+    elif (Str == "insert"):
+        if (file == None):
+            print "Erreur: aucun fichier chargé"
+        else:
+            if (len(params) == 0):
+                Str = raw_input_low("Entrez le score a inserer (lieu score ecole): ")
+            if (Str == "quit"):
+                Str = "1"
+            else:
+                if (len(params) == 0):
+                    Str = Str.split(' ')
+                else:
+                    Str = params
+                try:
+                    Str[0] = int(Str[0])
+                    Str[1] = int(Str[1])
+                    Str[2] = int(Str[2])
+                    if (Str[2] not in {0, 1, 2, 3, 4} or Str[0] < 0 or Str[0] >= ndict):
+                        raise BaseException("list index out of range")
+                except BaseException, EEEEE:
+                    print EEEEE
+                else:
+                    if (scores[Str[0]][0] < Str[1]):
+                        print "Ancien record: "+nsep(scores[Str[0]][0])+" ; nouveau record: "+nsep(Str[1])
+                        scores[Str[0]][0] = Str[1]
+                        scores[Str[0]][1] = Str[2]
+                    else:
+                        print "Meilleur score: "+nsep(scores[Str[0]][0])+" ; votre score: "+nsep(Str[1])
+                    i = 9
+                    while (i >= 0 and mscores[i][1] < Str[1]):
+                        i -= 1
+                    i += 1
+                    #if (dict[Str[0]][2] == '1'): pour eviter les lieux "chouchou"
+                    if (dict[Str[0]][2] == '1'):
+                        mscores.insert(i, [Str[0], Str[1], Str[2]])
+                        if (i == 10):
+                            pass
+                        else:
+                            def mlsk_1d56f(n):
+                                if (n == 0):
+                                    return "-er"
+                                else:
+                                    return "-eme"
+                            print "C'est le "+str(i+1) + mlsk_1d56f(i) + " meilleur score!"
+                            print "Score battu: "+nsep(mscores[i+1][1])
+                        popped = mscores.pop()
+                    print ""
+    elif (Str == "create"):
+        if (file != None):
+            if (raw_input_low("Voulez-vous fermer le fichier actuel? (Y/N) ") == "y"):
+                file.close()
+                file = None
+            Str = "1"
+        if (file == None):
+            if (len(params) == 0):
+                Str = raw_input_low("Entrez le nom du fichier (sans le .txt): ")
+            else:
+                Str = params[0]
+            if (Str != "quit"):
+                (file, scores, mscores) = create(Str + ".txt", dict)
+                namefile = Str
+            else:
+                Str = "1"
+    elif (Str == "genere"):
+        if (file == None):
+            print "Erreur: aucun fichier chargé"
+        else:
+            try:
+                htmlfile = open(namefile + '.html', "w+")
+            except BaseException, E:
+                print E
+            else:
+                genere(htmlfile, sdict, sbdict, dict, mdict, scores, mscores, max)
+                print "Fichier HTML écrit"
+                htmlfile.close()
+    elif (Str == "close" or Str == "quit"):
+        if (file != None):
+            file.close()
+            file = None
 
