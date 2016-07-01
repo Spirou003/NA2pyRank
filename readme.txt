@@ -6,14 +6,14 @@ Exécutez le fichier script.py, une console s'ouvre.
 Le script vous demande ce que vous voulez faire. Voici la liste des commandes possibles:
 - help : afficher l'aide, qui contient l'ensemble des commandes existantes
 - quit : quitter le script
-- create : créer un nouveau fichier de scores (nom inderdit: quit.txt)
-- load : charger un fichier de scores existant
+- create [filename] : créer un nouveau fichier de scores (nom inderdit: quit.txt). Un paramètre optionnel [filename] donne le nom du fichier (sans le .txt)
+- load : charger un fichier de scores existant. Un paramètre optionnel [filename] donne le nom du fichier (sans le .txt)
 - save : enregistrer les modifications apportées
 - close : fermer le fichier courant
-- insert : insérer un nouveau score
+- insert [lieu score école] : insérer un nouveau score. Trois paramètres optionnels [lieu score école] permettent d'insérer directement un nouveau score. Remarque: il faut donner les trois paramètres en même temps, sinon cela ne fonctionne pas
 - insert-help : détailler l'utilisation de la commande insert
 - genere : écrire le fichier HTML
-Toutes ces commandes s'utilisent sans paramètre. Si l'une en a besoin, elle le demande au moment venu.
+Toutes ces commandes peuvent s'utiliser sans paramètre. Si l'une en a besoin, elle le demande au moment venu ou le prend en paramètre optionnel.
 Aucune des commandes citées ne demande de confirmation pour s'exécuter. Si l'action ne peut pas se faire normalement, la raison sera copiée sur la console.
 
 Les scores conservés sont les suivants:
