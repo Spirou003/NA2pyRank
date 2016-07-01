@@ -26,6 +26,11 @@ table tr td
 	font-weight: bold;
 }
 
+table tr td.empty
+{
+	border: 0px;
+}
+
 span.Aude:after, span.Aude:before{content: url(img/iaps.gif); margin: 3px;}
 span.Gemi:after, span.Gemi:before{content: url(img/igms.gif); margin: 3px;}
 span.Guil:after, span.Guil:before{content: url(img/igus.gif); margin: 3px;}
